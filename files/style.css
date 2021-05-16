@@ -271,6 +271,9 @@ nav .logo.space{
   cursor: pointer;
   font-size: 18px;
 }
+.btndl .a{
+color: antiquewhite;
+}
 
 /* Darker background on mouse-over */
 .btndl:hover {
