@@ -1,6 +1,7 @@
 //  https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=7a31ef8faf51733740c3af33cdc42c4a
 // https://api.themoviedb.org/3/movie/550?api_key={api_key}&callback=test
 //https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>
+//https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>
 
 const API_KEY = 'api_key=7a31ef8faf51733740c3af33cdc42c4a';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -15,9 +16,9 @@ const main = document.getElementById('main');
 const formSearch =  document.getElementById('formSearch');
 const search = document.getElementById('search');
 
-getMovies(APIS_URL);
+getSeries(APIS_URL);
 
-function getMovies(url) 
+function getSeries(url) 
 {
     fetch(url).then(res => res.json())
     .then(data => {console.log(data.results)
@@ -28,22 +29,22 @@ function getMovies(url)
         const locdata = data.results;
         console.log(locdata); 
 */  
-    showMovies(data.results);
+    showSeries(data.results);
     }) 
 }
 
-function showMovies(data) {
+function showSeries(data) {
    main.innerHTML = '';
 
     data.forEach(movie => {
-        const {id,title, poster_path} = movie;
+        const {id,name, poster_path} = movie;
         const movieEl = document.createElement('div');
         movieEl.classList.add('box');
         movieEl.innerHTML = `
             
-            <img src="${IMG_URL+poster_path}" alt="${title}">
+            <img src="${IMG_URL+poster_path}" alt="${name}">
             <div class="in-box">
-            <center><span>${title}</span> <br> 
+            <center><span>${name}</span> <br> 
             <button class="btndl" id="${id}"onclick="clickfun(${id})" <a href="" > <i class="fa fa-download"></i> Download </a> </button>
             </center>
             </div>       
@@ -53,26 +54,26 @@ function showMovies(data) {
 }
 
 function clickfun(id){
-    const mvid = id;
-    localStorage.setItem("locmvid",mvid);
-    console.log(mvid+'in-function-click');
-    const mvurl =' https://api.themoviedb.org/3/movie/'+mvid+'?api_key=7a31ef8faf51733740c3af33cdc42c4a'
+    const tvid = id;
+    localStorage.setItem("loctvid",tvid);
+    console.log(tvid+' in-function-click');
+    const tvurl =' https://api.themoviedb.org/3/tv/'+tvid+'?api_key=7a31ef8faf51733740c3af33cdc42c4a'
 
-    localStorage.setItem("locmvurl",mvurl);
-    console.log(mvurl);
-    getmvinfo(mvurl);
+    localStorage.setItem("loctvurl",tvurl);
+    console.log(tvurl);
+    gettvinfo(tvurl);
 }
 
-function getmvinfo(url) 
+function gettvinfo(url) 
     {
-        const mvid = localStorage.getItem("locid")
-        console.log(mvid);
+        const tvid = localStorage.getItem("loctvid")
+        console.log(tvid);
         
         fetch(url)
         .then(response => response.json())
         .then(data => {console.log(data) })
         
-        window.location = 'dload.html';
+        window.location = 'tvdload.html';
         
     }
    
@@ -84,9 +85,9 @@ formSearch.addEventListener('submit', (e) => {
     const searchTerm = search.value;
 
     if(searchTerm) { 
-        getMovies(searchURL+'&query='+searchTerm)
+        getSeries(searchURL+'&query='+searchTerm)
     }else{
-        getMovies(APIS_URL);
+        getSeries(APIS_URL);
     }
 
 })

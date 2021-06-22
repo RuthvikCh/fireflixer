@@ -72,7 +72,7 @@ function getmvinfo(url)
         .then(response => response.json())
         .then(data => {console.log(data) })
         
-        window.location = 'dload.html';
+        window.location = 'files/dload.html';
         
     }
    
